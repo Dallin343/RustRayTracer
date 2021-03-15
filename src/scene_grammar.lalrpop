@@ -1,0 +1,72 @@
+use nalgebra::{Vector3, Point3};
+use crate::scene::{Scene, light::Light, camera::Camera as Cam};
+use crate::renderable::{Object, polygon::Polygon, sphere::Sphere};
+use crate::material::Material;
+
+grammar;
+
+
+pub Scene: Scene = {
+    Camera
+    Lights
+    Ambient
+    Background
+    Objects => Scene::new(<>)
+}
+
+Lights: Vec<Light> = {
+    <l:SceneLight+> => l
+}
+
+SceneLight: Light = {
+    "DirectionToLight " <dir: Vector>
+    "LightColor " <col: Vector> => Light::new(dir, col)
+}
+
+Ambient: Vector3<f32> = {
+    "AmbientLight" <v:Vector> => v
+}
+
+Background: Vector3<f32> = {
+    "BackgroundColor" <b:Vector> => b
+}
+
+Objects: Vec<Object> = {
+    <r:Renderable+> => r
+}
+
+Renderable: Object = {
+    "Sphere Center" <c:Point>
+    "Radius" <r:Num>
+    "Kd" <kd:Num>
+    "Ks" <ks:Num>
+    "Ka" <ka:Num>
+    "Od" <od:Vector>
+    "Os" <os:Vector>
+    "Kgls" <kgls:Num> => Object::Sphere(Sphere::new(c,r,Material::new(kd,ks,ka,od,os,kgls))),
+
+    "Triangle" <x:Point> <y:Point> <z:Point>
+    "Kd" <kd:Num>
+    "Ks" <ks:Num>
+    "Ka" <ka:Num>
+    "Od" <od:Vector>
+    "Os" <os:Vector>
+    "Kgls" <kgls:Num> => Object::Polygon(Polygon::new(x,y,z,Material::new(kd,ks,ka,od,os,kgls))),
+}
+
+Camera: Cam = {
+    "CameraLookAt" <look_at: Vector>
+    "CameraLookFrom" <look_from: Vector>
+    "CameraLookUp" <look_up: Vector>
+    "FieldOfView" <fov: Num> => Cam::new(look_at, look_from, look_up, fov)
+}
+
+Vector: Vector3<f32> = {
+    <x: Num> <y: Num> <z: Num> => Vector3::new(x, y, z)
+}
+
+Point: Point3<f32> = {
+    <x: Num> <y: Num> <z: Num> => Point3::new(x, y, z)
+}
+
+Num: f32 = <s:r"-?(\d*\.)?\d+"> => s.parse().unwrap();

@@ -1,0 +1,1 @@
+{"rustc":18294140696443704520,"features":"[]","target":17297070681547977258,"profile":936164052202214828,"path":1036222786711178230,"deps":[[16253857423017201445,"nalgebra",false,14154639228334237516]],"local":[{"CheckDepInfo":{"dep_info":"debug/.fingerprint/ray_tracer-6b2e38314d0144fe/dep-test-bin-ray_tracer"}}],"rustflags":[],"metadata":14846535713778951340}

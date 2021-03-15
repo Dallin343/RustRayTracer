@@ -1,0 +1,13 @@
+[package]
+name = "ray_tracer"
+version = "0.1.0"
+authors = ["Dallin Hagman <dallinhagman@gmail.com>"]
+edition = "2018"
+
+[build-dependencies]
+lalrpop = "0.19.5"
+
+[dependencies]
+nalgebra = "0.10.*"
+lalrpop-util = "0.19.5"
+regex = "1"
