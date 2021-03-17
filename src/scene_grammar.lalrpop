@@ -23,11 +23,11 @@ SceneLight: Light = {
     "LightColor " <col: Vector> => Light::new(dir, col)
 }
 
-Ambient: Vector3<f32> = {
+Ambient: Vector3<f64> = {
     "AmbientLight" <v:Vector> => v
 }
 
-Background: Vector3<f32> = {
+Background: Vector3<f64> = {
     "BackgroundColor" <b:Vector> => b
 }
 
@@ -61,12 +61,12 @@ Camera: Cam = {
     "FieldOfView" <fov: Num> => Cam::new(look_at, look_from, look_up, fov)
 }
 
-Vector: Vector3<f32> = {
+Vector: Vector3<f64> = {
     <x: Num> <y: Num> <z: Num> => Vector3::new(x, y, z)
 }
 
-Point: Point3<f32> = {
+Point: Point3<f64> = {
     <x: Num> <y: Num> <z: Num> => Point3::new(x, y, z)
 }
 
-Num: f32 = <s:r"-?(\d*\.)?\d+"> => s.parse().unwrap();
+Num: f64 = <s:r"-?(\d*\.)?\d+"> => s.parse().unwrap();

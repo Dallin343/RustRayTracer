@@ -1,22 +1,27 @@
-use nalgebra::{Point3, Vector3};
+use nalgebra::{Vector3, Point3, distance, normalize};
+use crate::rays::ray::Ray;
 
 pub struct Hit {
-    pub did_hit: bool,
-    pub t: f32,
-    pub point: Point3<f32>,
-    pub norm: Vector3<f32>,
-    pub color: Vector3<f32>,
+    pub t: f64,
+    pub point: Point3<f64>,
+    pub norm: Vector3<f64>,
 }
 
 impl Hit {
-    pub fn new(did_hit: bool, t: f32, point: Point3<f32>, norm: Vector3<f32>, color: Vector3<f32>) -> Self {
+    pub fn new(t: f64, point: Point3<f64>, norm: Vector3<f64>) -> Self {
         Hit {
-            did_hit,
             t,
             point,
             norm,
-            color
         }
+    }
+
+    pub fn distance_to(&self, ray: &Ray) -> f64 {
+        distance(&self.point, &ray.origin())
+    }
+
+    pub fn vector_to(&self, v: Point3<f64>) -> Vector3<f64> {
+        normalize(&(v - self.point))
     }
 }
 
